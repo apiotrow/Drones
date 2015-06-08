@@ -55,6 +55,15 @@
      <Compile Include="Assets\Scripts\one\SteeringPropeller.cs" />
      <Compile Include="Assets\Scripts\one\Tag_PropellerBlade.cs" />
      <Compile Include="Assets\Scripts\one\Weapon.cs" />
+     <Compile Include="Assets\Scripts\two\Drone.cs" />
+     <Compile Include="Assets\Scripts\two\Propeller.cs" />
+     <Compile Include="Assets\Scripts\two\one\MovingObject.cs" />
+     <Compile Include="Assets\Scripts\two\one\Propulsion.cs" />
+     <Compile Include="Assets\Scripts\two\one\PropulsionPropeller.cs" />
+     <Compile Include="Assets\Scripts\two\one\Steering.cs" />
+     <Compile Include="Assets\Scripts\two\one\SteeringPropeller.cs" />
+     <Compile Include="Assets\Scripts\two\one\Tag_PropellerBlade.cs" />
+     <Compile Include="Assets\Scripts\two\one\Weapon.cs" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
      <None Include="Assets\Standard Assets\Cameras\CameraGuidelines.txt" />
  <Reference Include="UnityEngine.UI">
