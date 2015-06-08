@@ -1,0 +1,16 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/SidePropeller.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Drone.cs" Line="9" Column="31" />
+      <File FileName="Assets/Scripts/Propeller.cs" Line="8" Column="1" />
+      <File FileName="Assets/Scripts/SidePropeller.cs" Line="8" Column="3" />
+      <File FileName="Assets/Scripts/MovingObject.cs" Line="4" Column="44" />
+      <File FileName="Assets/Scripts/Propulsion.cs" Line="13" Column="36" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
