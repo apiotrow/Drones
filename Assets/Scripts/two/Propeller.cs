@@ -40,6 +40,16 @@ namespace two
 
 		}
 
+		public void propel (float force)
+		{
+			propellingBody.AddForce (transform.up * Time.deltaTime * force);
+			
+			foreach (Rigidbody g in propellerBlades) {
+				g.AddTorque (Vector3.up * propelSpeed, ForceMode.Acceleration);
+			}
+			
+		}
+
 		public void steer ()
 		{
 			propellingBody.AddForce (transform.up * Time.deltaTime * steeringForce);

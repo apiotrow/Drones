@@ -14,9 +14,10 @@ namespace two
 			left,
 			right,
 			forward,
-			backward,
+			back,
 			stable
 		};
+		float vel = 1f;
 
 		protected override void Start ()
 		{
@@ -29,8 +30,19 @@ namespace two
 		{
 			base.Update ();
 			checkForInputs ();
-			if (!userInputting)
+			if (!userInputting){
 				stabilizeDrone ();
+				keepDroneAboveGround();
+			}
+		}
+
+		private void keepDroneAboveGround(){
+//			print (vel);
+			if(distToGround() < 3f){
+				initiatePropulsion(4000f / distToGround());
+//				vel += 20f;
+			}
+//			initiatePropulsion(vel);
 		}
 
 		private void stabilizeDrone ()
@@ -49,8 +61,29 @@ namespace two
 					}
 				}
 			}
+
+			if(rotatedForward()){
+				foreach (Propeller p in propellers) {
+					if(p.type == Propeller.Type.front){
+						p.propel ();
+					}
+				}
+			}else if(rotatedBack()){
+				foreach (Propeller p in propellers) {
+					if(p.type == Propeller.Type.back){
+						p.propel ();
+					}
+				}
+			}
 		}
 
+		private float distToGround(){
+			RaycastHit hit;
+			if (Physics.Raycast(chassis.transform.position, Vector3.down, out hit))
+				return hit.distance;
+			return -1f;
+		}
+		
 		private bool rotatedRight(){
 			Vector3 rot = chassis.transform.eulerAngles;
 			if(rot.z > 1f && rot.z < 179f){
@@ -67,14 +100,20 @@ namespace two
 			return false;
 		}
 
-		private RotationDirection getRotationDirection(){
+		private bool rotatedForward(){
 			Vector3 rot = chassis.transform.eulerAngles;
-			if(rot.z > 181f && rot.z < 356f){
-				return RotationDirection.left;
-			}else if(rot.z > 1f && rot.z < 179f){
-				return RotationDirection.right;
+			if(rot.x > 1f && rot.x < 179f){
+				return true;
 			}
-			return RotationDirection.stable;
+			return false;
+		}
+
+		private bool rotatedBack(){
+			Vector3 rot = chassis.transform.eulerAngles;
+			if(rot.x > 181f && rot.x < 356f){
+				return true;
+			}
+			return false;
 		}
 
 		private void checkForInputs ()
@@ -101,14 +140,14 @@ namespace two
 			}
 
 			if (Input.GetKey (KeyCode.A)) {
-				pt.Add(Propeller.Type.left);
+				pt.Add(Propeller.Type.right);
 				userInputting = true;
 			} else if (Input.GetKeyUp (KeyCode.A)) {
 				userInputting = false;
 			}
 
 			if (Input.GetKey (KeyCode.D)) {
-				pt.Add(Propeller.Type.right);
+				pt.Add(Propeller.Type.left);
 				userInputting = true;
 			} else if (Input.GetKeyUp (KeyCode.D)) {
 				userInputting = false;
@@ -121,8 +160,9 @@ namespace two
 		{
 			if (Input.GetKey (KeyCode.Space)) {
 				initiatePropulsion ();
+				userInputting = true;
 			} else if (Input.GetKeyUp (KeyCode.Space)) {
-
+				userInputting = false;
 			}
 		}
 
@@ -131,6 +171,13 @@ namespace two
 				if(pt.Contains(p.type)){
 					p.steer ();
 				}
+			}
+		}
+
+		private void initiatePropulsion (float force)
+		{
+			foreach (Propeller p in propellers) {
+				p.propel (force);
 			}
 		}
 
