@@ -46,15 +46,15 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Drone.cs" />
-     <Compile Include="Assets\Scripts\MovingObject.cs" />
-     <Compile Include="Assets\Scripts\Propulsion.cs" />
-     <Compile Include="Assets\Scripts\PropulsionPropeller.cs" />
-     <Compile Include="Assets\Scripts\SmoothFollowCSharp.cs" />
-     <Compile Include="Assets\Scripts\Steering.cs" />
-     <Compile Include="Assets\Scripts\SteeringPropeller.cs" />
-     <Compile Include="Assets\Scripts\Tag_PropellerBlade.cs" />
-     <Compile Include="Assets\Scripts\Weapon.cs" />
+     <Compile Include="Assets\Scripts\one\Drone.cs" />
+     <Compile Include="Assets\Scripts\one\MovingObject.cs" />
+     <Compile Include="Assets\Scripts\one\Propulsion.cs" />
+     <Compile Include="Assets\Scripts\one\PropulsionPropeller.cs" />
+     <Compile Include="Assets\Scripts\one\SmoothFollowCSharp.cs" />
+     <Compile Include="Assets\Scripts\one\Steering.cs" />
+     <Compile Include="Assets\Scripts\one\SteeringPropeller.cs" />
+     <Compile Include="Assets\Scripts\one\Tag_PropellerBlade.cs" />
+     <Compile Include="Assets\Scripts\one\Weapon.cs" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
      <None Include="Assets\Standard Assets\Cameras\CameraGuidelines.txt" />
  <Reference Include="UnityEngine.UI">
