@@ -8,7 +8,15 @@ namespace two
 	{
 		protected Propeller[] propellers;
 		private GameObject chassis;
-		private bool userInputting;
+		public bool userInputting;
+		RotationDirection rotationDirection;
+		private enum RotationDirection{
+			left,
+			right,
+			forward,
+			backward,
+			stable
+		};
 
 		protected override void Start ()
 		{
@@ -27,97 +35,109 @@ namespace two
 
 		private void stabilizeDrone ()
 		{
-//		if(chassis.transform.eulerAngles != Vector3.zero){
-//
-//		}
+			Vector3 rot = chassis.transform.eulerAngles;
+			if(rotatedLeft()){
+				foreach (Propeller p in propellers) {
+					if(p.type == Propeller.Type.right){
+						p.propel ();
+					}
+				}
+			}else if(rotatedRight()){
+				foreach (Propeller p in propellers) {
+					if(p.type == Propeller.Type.left){
+						p.propel ();
+					}
+				}
+			}
+		}
+
+		private bool rotatedRight(){
+			Vector3 rot = chassis.transform.eulerAngles;
+			if(rot.z > 1f && rot.z < 179f){
+				return true;
+			}
+			return false;
+		}
+
+		private bool rotatedLeft(){
+			Vector3 rot = chassis.transform.eulerAngles;
+			if(rot.z > 181f && rot.z < 356f){
+				return true;
+			}
+			return false;
+		}
+
+		private RotationDirection getRotationDirection(){
+			Vector3 rot = chassis.transform.eulerAngles;
+			if(rot.z > 181f && rot.z < 356f){
+				return RotationDirection.left;
+			}else if(rot.z > 1f && rot.z < 179f){
+				return RotationDirection.right;
+			}
+			return RotationDirection.stable;
 		}
 
 		private void checkForInputs ()
 		{
 			checkPropulsionInput ();
-//			checkSteeringInput ();
+			checkSteeringInput ();
 		}
 
 		private void checkSteeringInput ()
 		{
+			HashSet<Propeller.Type> pt = new HashSet<Propeller.Type>();
 			if (Input.GetKey (KeyCode.W)) {
-				initiateForwardSteering ();
+				pt.Add(Propeller.Type.back);
 				userInputting = true;
 			} else if (Input.GetKeyUp (KeyCode.W)) {
-				endForwardSteering ();
 				userInputting = false;
 			}
 
 			if (Input.GetKey (KeyCode.S)) {
-				initiateBackwardSteering ();
+				pt.Add(Propeller.Type.front);
 				userInputting = true;
 			} else if (Input.GetKeyUp (KeyCode.S)) {
-				endBackwardSteering ();
 				userInputting = false;
 			}
-		}
 
-		private void initiateBackwardSteering ()
-		{
-//			foreach (Steering s in steering) {
-//				if (s.direction == Steering.Direction.backward) {
-//					s.steering = true;
-//					s.steer ();
-//				}
-//			}
-		}
-	
-		private void endBackwardSteering ()
-		{
-//			foreach (Steering s in steering) {
-//				if (s.direction == Steering.Direction.backward) {
-//					s.steering = false;
-//				}
-//			}
-		}
+			if (Input.GetKey (KeyCode.A)) {
+				pt.Add(Propeller.Type.left);
+				userInputting = true;
+			} else if (Input.GetKeyUp (KeyCode.A)) {
+				userInputting = false;
+			}
 
-		private void initiateForwardSteering ()
-		{
-//			foreach (Steering s in steering) {
-//				if (s.direction == Steering.Direction.forward) {
-//					s.steering = true;
-//					s.steer ();
-//				}
-//			}
-		}
+			if (Input.GetKey (KeyCode.D)) {
+				pt.Add(Propeller.Type.right);
+				userInputting = true;
+			} else if (Input.GetKeyUp (KeyCode.D)) {
+				userInputting = false;
+			}
 
-		private void endForwardSteering ()
-		{
-//			foreach (Steering s in steering) {
-//				if (s.direction == Steering.Direction.forward) {
-//					s.steering = false;
-//				}
-//			}
+			initiateSteering(pt);
 		}
 
 		private void checkPropulsionInput ()
 		{
 			if (Input.GetKey (KeyCode.Space)) {
-				userInputting = true;
 				initiatePropulsion ();
 			} else if (Input.GetKeyUp (KeyCode.Space)) {
-				userInputting = false;
-				endPropulsion ();
+
+			}
+		}
+
+		private void initiateSteering(HashSet<Propeller.Type> pt){
+			foreach (Propeller p in propellers) {
+				if(pt.Contains(p.type)){
+					p.steer ();
+				}
 			}
 		}
 
 		private void initiatePropulsion ()
 		{
 			foreach (Propeller p in propellers) {
-				p.propelling = true;
 				p.propel ();
-			}
-		}
-
-		private void endPropulsion ()
-		{
-			foreach (Propeller p in propellers) {
-				p.propelling = false;
 			}
 		}
 

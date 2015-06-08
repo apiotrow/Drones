@@ -8,14 +8,16 @@ namespace two
 	{
 		protected float propelForce = 2000f;
 		private List<Rigidbody> propellerBlades = new List<Rigidbody> ();
-		protected float hoverSpeed = 200f;
+		protected float steeringForce = 200f;
 		protected float propelSpeed = 80f;
 		public Rigidbody propellingBody;
-		public bool propelling;
 		public Type type;
 		public enum Type
 		{
-
+			front,
+			back,
+			left,
+			right
 		}
 
 		protected virtual void Start ()
@@ -36,6 +38,16 @@ namespace two
 				g.AddTorque (Vector3.up * propelSpeed, ForceMode.Acceleration);
 			}
 
+		}
+
+		public void steer ()
+		{
+			propellingBody.AddForce (transform.up * Time.deltaTime * steeringForce);
+			
+			foreach (Rigidbody g in propellerBlades) {
+				g.AddTorque (Vector3.up * propelSpeed, ForceMode.Acceleration);
+			}
+			
 		}
 
 		private void initPropellingBody(){
