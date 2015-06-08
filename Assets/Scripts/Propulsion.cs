@@ -2,19 +2,18 @@
 using System.Collections;
 
 public class Propulsion : MonoBehaviour {
-	protected Propeller propeller;
 	protected float propelForce;
-	private Rigidbody body;
+	private Rigidbody thisRigidBody;
 	public bool propelling;
 
 	protected virtual void Start () {
-		body = gameObject.GetComponent<Rigidbody>();
+		thisRigidBody = gameObject.GetComponent<Rigidbody>();
 	}
 
 	protected virtual void Update () {
 	}
 
 	public void propel(){
-		body.AddForce(transform.up * Time.deltaTime * 2000f);
+		thisRigidBody.AddForce(transform.up * Time.deltaTime * propelForce);
 	}
 }
